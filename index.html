@@ -5,20 +5,81 @@
     <meta charset="UTF-8">
     <title>Simulador de Parcelas - JuninCell</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background: #000000; color: #ffffff; padding: 30px; }
-        h1 { color: #025710; }
-        input, button { padding: 10px; margin: 10px; font-size: 16px; border: 1px solid #ffffff; border-radius: 5px; }
-        table { margin: 20px auto; border-collapse: collapse; width: 90%; max-width: 600px; }
-        th, td { border: 1px solid #025710; padding: 10px; font-size: 15px; }
-        th { background-color: #025710; }
-        footer { margin-top: 40px; font-size: 14px; color: #ffffff; }
+        body {
+            background-color: #000;
+            color: #00cc66;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        h1 {
+            color: #00cc66;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 1px 1px 4px #008040;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo img {
+            height: 200px;
+        }
+        input, button {
+            padding: 12px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+        }
+        input {
+            width: 220px;
+            box-shadow: 0 0 8px #00cc66;
+        }
+        button {
+            background-color: #00e676;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #00cc66;
+        }
+        table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 95%;
+            max-width: 700px;
+            box-shadow: 0 0 10px #00cc66;
+        }
+        th, td {
+            border: 1px solid #00cc66;
+            padding: 12px;
+            font-size: 16px;
+        }
+        th {
+            background-color: #111;
+        }
+        #debito {
+            margin-top: 25px;
+            font-size: 20px;
+            color: #00ff99;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px #008040;
+        }
     </style>
 </head>
 <body>
-    <h1>Simule suas Parcelas - Junin Cell</h1>
-    <p>Digite o valor da compra no campo abaixo:</p>
+    <div class="logo">
+        <img src="Logo.JPG" alt="Logo Junin Cell" />
+    </div>
+    <h1>Simulador de Parcelas - Junin Cell</h1>
+    <p>Digite o valor da compra:</p>
     <input type="number" id="valor" placeholder="Ex: 1200.00" />
     <button onclick="simular()">Calcular</button>
+
+    <div id="debito"></div>
+
     <table>
         <thead>
             <tr>
@@ -29,13 +90,13 @@
         </thead>
         <tbody id="resultado"></tbody>
     </table>
-    <footer>
-        <h3>Junin Cell</h3>
-    </footer>
+
     <script>
-        const taxas = [0.0429,0.0659,0.0716,0.07730000000000001,0.0837,0.0885,0.0947,0.10039999999999999,0.10640000000000001,0.11220000000000001,0.1184,0.124];
+        const taxas = [0.0429, 0.0659, 0.0716, 0.0773, 0.0837, 0.0885, 0.0947, 0.1004, 0.1064, 0.1122, 0.1184, 0.124];
         function simular() {
             const valor = parseFloat(document.getElementById('valor').value);
+            const debito = valor * 0.985;
+            document.getElementById("debito").innerText = `Débito com 1,5%: R$ ${debito.toFixed(2)}`;
             let html = "";
             for (let i = 1; i <= 12; i++) {
                 let taxa = taxas[i - 1];
