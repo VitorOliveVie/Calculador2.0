@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulador de Parcelas - JuninCell</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #ffeaf4; color: #333; padding: 30px; }
+        h1 { color: #e83e8c; }
+        input, button { padding: 10px; margin: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; }
+        table { margin: 20px auto; border-collapse: collapse; width: 90%; max-width: 600px; }
+        th, td { border: 1px solid #ccc; padding: 10px; font-size: 15px; }
+        th { background-color: #f9d7e5; }
+        footer { margin-top: 40px; font-size: 14px; color: #777; }
+    </style>
+</head>
+<body>
+    <h1>Simule suas Parcelas - Junin Cell</h1>
+    <p>Digite o valor da compra no campo abaixo:</p>
+    <input type="number" id="valor" placeholder="Ex: 1200.00" />
+    <button onclick="simular()">Calcular</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Parcelas</th>
+                <th>Valor da Parcela (R$)</th>
+                <th>Total com Taxa (R$)</th>
+            </tr>
+        </thead>
+        <tbody id="resultado"></tbody>
+    </table>
+    <footer>
+        Taxas baseadas em Master + 1,5% de débito. Valores aproximados.<br>
+        Junin Cell - Jardim Ingá
+    </footer>
+    <script>
+        const taxas = [0.0429,0.0659,0.0716,0.07730000000000001,0.0837,0.0885,0.0947,0.10039999999999999,0.10640000000000001,0.11220000000000001,0.1184,0.124];
+        function simular() {
+            const valor = parseFloat(document.getElementById('valor').value);
+            let html = "";
+            for (let i = 1; i <= 12; i++) {
+                let taxa = taxas[i - 1];
+                let total = valor * (1 + taxa);
+                let parcela = total / i;
+                html += `<tr><td>${i}x</td><td>${parcela.toFixed(2)}</td><td>${total.toFixed(2)}</td></tr>`;
+            }
+            document.getElementById("resultado").innerHTML = html;
+        }
+    </script>
+</body>
+</html>
