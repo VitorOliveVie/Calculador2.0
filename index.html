@@ -17,9 +17,6 @@
             margin-bottom: 10px;
             font-size: 24px;
         }
-        .logo {
-            margin-bottom: 15px;
-        }
         .logo img {
             height: 200px;
         }
@@ -71,7 +68,7 @@
     </div>
     <h1>Simulador de Parcelas</h1>
 
-    <input type="number" id="valor" placeholder="Valor da compra" />
+    <input type="number" id="valor" placeholder="Ex: 2000" />
     <button onclick="simular()">Calcular</button>
     <button onclick="copiarWhatsapp()">Copiar WhatsApp</button>
 
@@ -94,7 +91,7 @@
 
         function simular() {
             const valor = parseFloat(document.getElementById('valor').value);
-            const debito = valor * 1.015;
+            const debito = valor / (1 - 0.025);
             document.getElementById("debito").innerText = `Débito: R$ ${debito.toFixed(2)}`;
             let html = "";
             let textoWhatsapp = `Débito: R$ ${debito.toFixed(2)}
@@ -104,7 +101,7 @@ Parcelamento:
 
             for (let i = 1; i <= 12; i++) {
                 let taxa = taxas[i - 1];
-                let total = valor * (1 + taxa);
+                let total = valor / (1 - taxa);
                 let parcela = total / i;
                 html += `<tr><td>${i}x</td><td>${parcela.toFixed(2)}</td><td>${total.toFixed(2)}</td></tr>`;
                 textoWhatsapp += `${i}x de R$ ${parcela.toFixed(2)} (Total: R$ ${total.toFixed(2)})
