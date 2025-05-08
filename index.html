@@ -68,7 +68,7 @@
     </div>
     <h1>Simulador de Parcelas</h1>
 
-    <input type="number" id="valor" placeholder="Ex: 2000" />
+    <input type="number" id="valor" placeholder="Valor da Compra" />
     <button onclick="simular()">Calcular</button>
     <button onclick="copiarWhatsapp()">Copiar WhatsApp</button>
 
@@ -86,26 +86,21 @@
     </table>
 
     <script>
-        const taxas = [0.0429, 0.0659, 0.0716, 0.0773, 0.0837, 0.0885, 0.0947, 0.1004, 0.1064, 0.1122, 0.1184, 0.124];
+        const taxas = [0.0529, 0.0759, 0.0816, 0.0873, 0.0937, 0.0985, 0.1047, 0.1104, 0.1164, 0.1222, 0.1284, 0.134];
         let ultimaSimulacao = "";
 
         function simular() {
             const valor = parseFloat(document.getElementById('valor').value);
             const debito = valor / (1 - 0.025);
-            document.getElementById("debito").innerText = `Débito: R$ ${debito.toFixed(2)}`;
+            document.getElementById("debito").innerText = "Débito: R$ " + debito.toFixed(2);
             let html = "";
-            let textoWhatsapp = `Débito: R$ ${debito.toFixed(2)}
+            let textoWhatsapp = "Débito: R$ " + debito.toFixed(2) + "\n\nParcelamento:\n";
 
-Parcelamento:
-`;
-
-            for (let i = 1; i <= 12; i++) {
-                let taxa = taxas[i - 1];
-                let total = valor / (1 - taxa);
-                let parcela = total / i;
-                html += `<tr><td>${i}x</td><td>${parcela.toFixed(2)}</td><td>${total.toFixed(2)}</td></tr>`;
-                textoWhatsapp += `${i}x de R$ ${parcela.toFixed(2)} (Total: R$ ${total.toFixed(2)})
-`;
+            for (let i = 0; i < taxas.length; i++) {
+                let total = valor / (1 - taxas[i]);
+                let parcela = total / (i + 1);
+                html += "<tr><td>" + (i + 1) + "x</td><td>R$ " + parcela.toFixed(2) + "</td><td>R$ " + total.toFixed(2) + "</td></tr>";
+                textoWhatsapp += (i + 1) + "x de R$ " + parcela.toFixed(2) + " (Total: R$ " + total.toFixed(2) + ")\n";
             }
 
             document.getElementById("resultado").innerHTML = html;
